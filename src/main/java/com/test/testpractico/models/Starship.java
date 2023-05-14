@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Starship {
 
-
     private String name;
     private String model;
     private String manufacturer;
