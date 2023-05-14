@@ -31,7 +31,9 @@
             <li><a class="dropdown-item" href="/users-count.html">Fetch & Count</a></li>
           </ul>
         </li>
-        <li class="nav-item"><a class="nav-link" href="starship.html">Starship</a></li>
+        <li class="nav-item"><a class="nav-link" href="/starship.html">Starship</a></li>
+
+
       </ul>
       <form class="d-flex">
         <button class="btn btn-outline-dark" type="submit">
@@ -47,8 +49,8 @@
 <header class="bg-dark py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Users</h1>
-      <p class="lead fw-normal text-white-50 mb-0">Fetch & Count</p>
+      <h1 class="display-4 fw-bolder">Starship</h1>
+      <p class="lead fw-normal text-white-50 mb-0">Get starship according to : passengers, consumables, films and max speed</p>
     </div>
   </div>
 </header>
@@ -56,7 +58,14 @@
 <section class="py-5">
   <div class="container px-4 px-lg-5 ">
 
-    <div class="row gx-4  row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center " id="cardUserCount" >
+    <div class="d-sm-flex align-items-sm-center mb-3">
+      <input class="input-find" type="text" id="passengers" placeholder="Ingrese los pasajeros" required>
+      <button class="btn btn-outline-dark m-lg-3" type="submit" onclick="getpassengersValue()">
+        Find
+      </button>
+    </div>
+
+    <div class="row gx-4  row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center " id="cardStarships" >
 
     </div>
   </div>
@@ -69,6 +78,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/usercount.js"></script>
+<script src="js/starship.js"></script>
 </body>
 </html>
