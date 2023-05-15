@@ -56,13 +56,16 @@ async function getPlanets() {
                 cardFooterdiv.classList.add('text-center');
                 cardFooter.appendChild(cardFooterdiv);
 
-                const openModalButton = document.createElement('button');
-                openModalButton.classList.add('btn');
-                openModalButton.classList.add('btn-outline-dark');
-                openModalButton.textContent = 'Update';
-                openModalButton.setAttribute('data-bs-toggle', 'modal');
-                openModalButton.setAttribute('data-bs-target', `#${planet.name}`);
-                cardFooterdiv.appendChild(openModalButton);
+                const getPlanetButton = document.createElement('a');
+                getPlanetButton.classList.add('btn');
+                getPlanetButton.classList.add('btn-outline-dark');
+                getPlanetButton.classList.add('mt-auto');
+                getPlanetButton.classList.add('ml-2');
+                getPlanetButton.textContent = 'See';
+                getPlanetButton.addEventListener('click',function (){
+                    getPlanetByName(planet.name)
+                })
+                cardFooterdiv.appendChild(getPlanetButton);
 
                 const cardButtonDelete = document.createElement('a');
                 cardButtonDelete.classList.add('btn');
@@ -98,4 +101,97 @@ async function deletePlanet(name) {
     });
 
     location.reload()
+}
+async function getPlanetByName(name) {
+    fetch('/planetidlist/' + name)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(planet => {
+            if (planet) {
+                const planetContainer = document.getElementById('updatePlanet') || '';
+                planetContainer.innerHTML = "";
+
+                const card = document.createElement('div');
+                card.classList.add('col');
+                card.classList.add('mb-5');
+
+                const cardSh = document.createElement('div');
+                cardSh.classList.add('card');
+                cardSh.classList.add('h-100');
+                card.appendChild(cardSh);
+
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body');
+                cardBody.classList.add('p-4');
+                cardSh.appendChild(cardBody);
+
+                const tittle = document.createElement('h5');
+                tittle.textContent = "Update Planet";
+                tittle.classList.add('fw-bolder');
+                tittle.classList.add('mb-2');
+                cardBody.appendChild(tittle);
+
+                const labelTerrain = document.createElement('label');
+                labelTerrain.textContent = 'Terrain:';
+                labelTerrain.classList.add('mb-1');
+                cardBody.appendChild(labelTerrain);
+
+                const terrain = document.createElement('input');
+                terrain.type = "text";
+                terrain.classList.add('form-control');
+                terrain.classList.add('mb-3');
+                terrain.value = planet.terrain;
+                cardBody.appendChild(terrain);
+
+                const labelPopulation = document.createElement('label');
+                labelPopulation.textContent = 'Population:';
+                labelPopulation.classList.add('mb-1');
+                cardBody.appendChild(labelPopulation);
+
+                const population = document.createElement('input');
+                population.type = "text";
+                population.classList.add('form-control');
+                population.classList.add('mb-3');
+                population.value = planet.population;
+                cardBody.appendChild(population);
+
+
+                const cardFooterdiv = document.createElement('div');
+                cardFooterdiv.classList.add('text-center');
+                cardFooterdiv.classList.add('mt-3');
+                cardBody.appendChild(cardFooterdiv);
+
+                const getStarshipButton = document.createElement('a');
+                getStarshipButton.classList.add('btn');
+                getStarshipButton.classList.add('btn-outline-dark');
+                getStarshipButton.classList.add('mt-auto');
+                getStarshipButton.classList.add('ml-2');
+                getStarshipButton.textContent = 'Update';
+                cardFooterdiv.appendChild(getStarshipButton);
+
+
+                // Agregar la card al contenedor
+                planetContainer.appendChild(card);
+            }
+            else{
+                const planetContainerNull = document.getElementById('cardPlanet') || '';
+                planetContainerNull.innerHTML = "";
+
+                const card = document.createElement('div');
+                card.classList.add('text-center');
+
+                const name = document.createElement('h5');
+                name.textContent = `No se ha encontrado ningun planeta con ese terreno`;
+                name.classList.add('fw-bolder');
+                card.appendChild(name);
+
+                planetContainerNull.appendChild(card);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }

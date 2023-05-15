@@ -1,7 +1,6 @@
 package com.test.testpractico.controllers;
 
 import com.test.testpractico.models.Planet;
-import com.test.testpractico.models.Starship;
 import com.test.testpractico.services.PlanetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +33,7 @@ public class PlanetController {
     }
     @GetMapping("/planetidlist/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public Starship getPlanetByName(@PathVariable String name) {
+    public Planet getPlanetByName(@PathVariable String name) {
         return planetService.getPlanetByName(name);
     }
     @DeleteMapping("/deletplanet/{name}")

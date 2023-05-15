@@ -2,10 +2,7 @@ package com.test.testpractico.services;
 
 import com.test.testpractico.models.Planet;
 import com.test.testpractico.models.PlanetResponse;
-import com.test.testpractico.models.Starship;
-import com.test.testpractico.models.StarshipResponse;
 import com.test.testpractico.repositories.InPlanetsRepo;
-import com.test.testpractico.repositories.InStarshipRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +62,7 @@ public class PlanetService {
     public List<Planet> getAllplanets(){
         return repoplanet.findAll();
     }
-    public Starship getPlanetByName(String name) {
+    public Planet getPlanetByName(String name) {
         return repoplanet.findByName(name);
     }
 }

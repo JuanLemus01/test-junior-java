@@ -64,68 +64,16 @@ async function starshipList() {
                 cardFooter.appendChild(cardFooterdiv);
 
 
-                const openModalButton = document.createElement('button');
-                openModalButton.classList.add('btn');
-                openModalButton.classList.add('btn-outline-dark');
-                openModalButton.textContent = 'Update';
-                openModalButton.setAttribute('data-bs-toggle', 'modal');
-                openModalButton.setAttribute('data-bs-target', `#${starship.name}`);
-                cardFooterdiv.appendChild(openModalButton);
-
-// Crear el contenedor principal del modal
-                const modalContainer = document.createElement('div');
-                modalContainer.classList.add('modal');
-                modalContainer.classList.add('fade');
-                modalContainer.id = starship.name;
-                document.body.appendChild(modalContainer);
-
-// Crear el contenido del modal
-                const modalContent = document.createElement('div');
-                modalContent.classList.add('modal-dialog');
-                modalContent.classList.add('modal-dialog-centered');
-                modalContainer.appendChild(modalContent);
-
-// Crear el contenido interno del modal
-                const modalInternalContent = document.createElement('div');
-                modalInternalContent.classList.add('modal-content');
-                modalContent.appendChild(modalInternalContent);
-
-// Agregar el encabezado del modal
-                const modalHeader = document.createElement('div');
-                modalHeader.classList.add('modal-header');
-                modalInternalContent.appendChild(modalHeader);
-
-// Agregar el título del modal
-                const modalTitle = document.createElement('h5');
-                modalTitle.classList.add('modal-title');
-                modalTitle.textContent = starship.name;
-                modalHeader.appendChild(modalTitle);
-
-// Agregar el cuerpo del modal
-                const modalBody = document.createElement('div');
-                modalBody.classList.add('modal-body');
-                modalInternalContent.appendChild(modalBody);
-
-// Agregar el contenido del cuerpo del modal
-                const modalText = document.createElement('p');
-                modalText.textContent = 'Este es el contenido del modal.';
-                modalBody.appendChild(modalText);
-
-// Agregar el pie del modal
-                const modalFooter = document.createElement('div');
-                modalFooter.classList.add('modal-footer');
-                modalInternalContent.appendChild(modalFooter);
-
-// Agregar el botón de cierre del modal
-                const closeButton = document.createElement('button');
-                closeButton.classList.add('btn');
-                closeButton.classList.add('btn-secondary');
-                closeButton.setAttribute('data-bs-dismiss', 'modal');
-                closeButton.textContent = 'Cerrar';
-                modalFooter.appendChild(closeButton);
-
-
-                $(`#${starship.name}`).modal('show');
+                const getStarshipButton = document.createElement('a');
+                getStarshipButton.classList.add('btn');
+                getStarshipButton.classList.add('btn-outline-dark');
+                getStarshipButton.classList.add('mt-auto');
+                getStarshipButton.classList.add('ml-2');
+                getStarshipButton.textContent = 'See';
+                getStarshipButton.addEventListener('click',function (){
+                    getStarshipByName(starship.name)
+                })
+                cardFooterdiv.appendChild(getStarshipButton);
 
 
                 const cardButtonDelete = document.createElement('a');
@@ -162,4 +110,109 @@ async function deleteStarship(name) {
     });
 
     location.reload()
+}
+async function getStarshipByName(name) {
+    fetch('/shipidlist/' + name)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(starship => {
+            if (starship) {
+                const starshipContainer = document.getElementById('updateStarship') || '';
+                starshipContainer.innerHTML = "";
+
+                const card = document.createElement('div');
+                card.classList.add('col');
+                card.classList.add('mb-5');
+
+                const cardSh = document.createElement('div');
+                cardSh.classList.add('card');
+                cardSh.classList.add('h-100');
+                card.appendChild(cardSh);
+
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body');
+                cardBody.classList.add('p-4');
+                cardSh.appendChild(cardBody);
+
+                const tittle = document.createElement('h5');
+                tittle.textContent = "Update Starship";
+                tittle.classList.add('fw-bolder');
+                tittle.classList.add('mb-2');
+                cardBody.appendChild(tittle);
+
+                const labelPassenger = document.createElement('label');
+                labelPassenger.textContent = 'Passengers:';
+                labelPassenger.classList.add('mb-1');
+                cardBody.appendChild(labelPassenger);
+
+                const passengers = document.createElement('input');
+                passengers.type = "text";
+                passengers.classList.add('form-control');
+                passengers.classList.add('mb-3');
+                passengers.value = starship.passengers;
+                cardBody.appendChild(passengers);
+
+                const labelSpeed = document.createElement('label');
+                labelSpeed.textContent = 'Max Speed:';
+                labelSpeed.classList.add('mb-1');
+                cardBody.appendChild(labelSpeed);
+
+                const speed = document.createElement('input');
+                speed.type = "text";
+                speed.classList.add('form-control');
+                speed.classList.add('mb-3');
+                speed.value = starship.max_atmosphering_speed;
+                cardBody.appendChild(speed);
+
+                const labelConsumables = document.createElement('label');
+                labelConsumables.textContent = 'Consumables:';
+                labelConsumables.classList.add('mb-1');
+                cardBody.appendChild(labelConsumables);
+
+                const consumables = document.createElement('input');
+                consumables.type = "text";
+                consumables.classList.add('form-control');
+                consumables.classList.add('mb-3');
+                consumables.value = starship.consumables;
+                cardBody.appendChild(consumables);
+
+                const cardFooterdiv = document.createElement('div');
+                cardFooterdiv.classList.add('text-center');
+                cardFooterdiv.classList.add('mt-3');
+                cardBody.appendChild(cardFooterdiv);
+
+                const getStarshipButton = document.createElement('a');
+                getStarshipButton.classList.add('btn');
+                getStarshipButton.classList.add('btn-outline-dark');
+                getStarshipButton.classList.add('mt-auto');
+                getStarshipButton.classList.add('ml-2');
+                getStarshipButton.textContent = 'Update';
+                cardFooterdiv.appendChild(getStarshipButton);
+
+
+
+                // Agregar la card al contenedor
+                starshipContainer.appendChild(card);
+            }
+            else{
+                const starshipContainerNull = document.getElementById('updateStarship') || '';
+                starshipContainerNull.innerHTML = "";
+
+                const card = document.createElement('div');
+                card.classList.add('text-center');
+
+                const name = document.createElement('h5');
+                name.textContent = `No se ha encontrado ninguna nave con esa capacidad`;
+                name.classList.add('fw-bolder');
+                card.appendChild(name);
+
+                starshipContainerNull.appendChild(card);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }
