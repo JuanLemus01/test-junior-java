@@ -1,14 +1,12 @@
 package com.test.testpractico.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class NameUsuario {
-
-    @JsonProperty("title")
     private String title;
     private String first;
     private String last;
-
 
     public String getTitle() {
         return title;

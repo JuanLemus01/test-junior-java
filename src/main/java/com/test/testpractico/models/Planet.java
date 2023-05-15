@@ -30,7 +30,6 @@ public class Planet {
     public String getPopulation() {
         return population;
     }
-
     public void setPopulation(String population) {
         this.population = population;
     }

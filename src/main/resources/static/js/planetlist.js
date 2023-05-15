@@ -144,6 +144,7 @@ async function getPlanetByName(name) {
                 terrain.classList.add('form-control');
                 terrain.classList.add('mb-3');
                 terrain.value = planet.terrain;
+                terrain.id = "terrain"
                 cardBody.appendChild(terrain);
 
                 const labelPopulation = document.createElement('label');
@@ -156,22 +157,24 @@ async function getPlanetByName(name) {
                 population.classList.add('form-control');
                 population.classList.add('mb-3');
                 population.value = planet.population;
+                population.id = "population"
                 cardBody.appendChild(population);
-
 
                 const cardFooterdiv = document.createElement('div');
                 cardFooterdiv.classList.add('text-center');
                 cardFooterdiv.classList.add('mt-3');
                 cardBody.appendChild(cardFooterdiv);
 
-                const getStarshipButton = document.createElement('a');
-                getStarshipButton.classList.add('btn');
-                getStarshipButton.classList.add('btn-outline-dark');
-                getStarshipButton.classList.add('mt-auto');
-                getStarshipButton.classList.add('ml-2');
-                getStarshipButton.textContent = 'Update';
-                cardFooterdiv.appendChild(getStarshipButton);
-
+                const updateButton = document.createElement('a');
+                updateButton.classList.add('btn');
+                updateButton.classList.add('btn-outline-dark');
+                updateButton.classList.add('mt-auto');
+                updateButton.classList.add('ml-2');
+                updateButton.textContent = 'Update';
+                updateButton.addEventListener('click',function (){
+                    updatePlanet(planet.name)
+                })
+                cardFooterdiv.appendChild(updateButton);
 
                 // Agregar la card al contenedor
                 planetContainer.appendChild(card);
@@ -193,5 +196,30 @@ async function getPlanetByName(name) {
         })
         .catch(error => {
             console.error(error);
+        });
+}
+async function updatePlanet(name) {
+    const terrain = document.getElementById("terrain").value;
+    const population = document.getElementById("population").value;
+
+    const planet = {
+        terrain: terrain,
+        population: population
+    };
+
+    fetch(`/updateplanet/${name}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(planet)
+    })
+        .then(response => response.json())
+        .then(updatedPlanet => {
+            alert("Planeta actualizado correctamente")
+            location.reload()
+        })
+        .catch(error => {
+            console.error('Error al actualizar el planeta:', error);
         });
 }

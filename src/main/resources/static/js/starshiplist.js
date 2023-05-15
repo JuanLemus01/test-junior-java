@@ -153,6 +153,7 @@ async function getStarshipByName(name) {
                 passengers.classList.add('form-control');
                 passengers.classList.add('mb-3');
                 passengers.value = starship.passengers;
+                passengers.id = "passengers";
                 cardBody.appendChild(passengers);
 
                 const labelSpeed = document.createElement('label');
@@ -165,6 +166,7 @@ async function getStarshipByName(name) {
                 speed.classList.add('form-control');
                 speed.classList.add('mb-3');
                 speed.value = starship.max_atmosphering_speed;
+                speed.id = "max_atmosphering_speed";
                 cardBody.appendChild(speed);
 
                 const labelConsumables = document.createElement('label');
@@ -177,6 +179,7 @@ async function getStarshipByName(name) {
                 consumables.classList.add('form-control');
                 consumables.classList.add('mb-3');
                 consumables.value = starship.consumables;
+                consumables.id = "comsumables";
                 cardBody.appendChild(consumables);
 
                 const cardFooterdiv = document.createElement('div');
@@ -184,15 +187,16 @@ async function getStarshipByName(name) {
                 cardFooterdiv.classList.add('mt-3');
                 cardBody.appendChild(cardFooterdiv);
 
-                const getStarshipButton = document.createElement('a');
-                getStarshipButton.classList.add('btn');
-                getStarshipButton.classList.add('btn-outline-dark');
-                getStarshipButton.classList.add('mt-auto');
-                getStarshipButton.classList.add('ml-2');
-                getStarshipButton.textContent = 'Update';
-                cardFooterdiv.appendChild(getStarshipButton);
-
-
+                const updateButton = document.createElement('a');
+                updateButton.classList.add('btn');
+                updateButton.classList.add('btn-outline-dark');
+                updateButton.classList.add('mt-auto');
+                updateButton.classList.add('ml-2');
+                updateButton.textContent = 'Update';
+                updateButton.addEventListener('click',function (){
+                    updateStarship(starship.name)
+                })
+                cardFooterdiv.appendChild(updateButton);
 
                 // Agregar la card al contenedor
                 starshipContainer.appendChild(card);
@@ -216,3 +220,31 @@ async function getStarshipByName(name) {
             console.error(error);
         });
 }
+async function updateStarship(name) {
+    const passengers = document.getElementById("passengers").value;
+    const comsumables = document.getElementById("comsumables").value;
+    const max_atmosphering_speed = document.getElementById("max_atmosphering_speed").value;
+
+    const starship = {
+        consumables: comsumables,
+        passengers: passengers,
+        max_atmosphering_speed: max_atmosphering_speed
+    };
+
+    fetch(`/starshiprupdate/${name}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(starship)
+    })
+        .then(response => response.json())
+        .then(updatedStarship => {
+            alert("Starship actualizada correctamente")
+            location.reload()
+        })
+        .catch(error => {
+            console.error('Error al actualizar la starship:', error);
+        });
+}
+

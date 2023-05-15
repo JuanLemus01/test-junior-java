@@ -2,6 +2,7 @@ package com.test.testpractico.services;
 
 import com.test.testpractico.models.User;
 import com.test.testpractico.models.UserResponse;
+import com.test.testpractico.repositories.InUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import java.util.*;
 public class UserService {
 
     private RestTemplate restTemplate;
+    @Autowired
+    private InUserRepo repoUser;
 
     public UserService() {
         restTemplate = createRestTemplate();
@@ -53,10 +56,8 @@ public class UserService {
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
-
                 public void checkClientTrusted(X509Certificate[] certs, String authType) {
                 }
-
                 public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
                 }
             }
@@ -85,8 +86,6 @@ public class UserService {
         return filteredUsers;
     }
 
-
-
     public List<User> getCountLetters() {
         ResponseEntity<UserResponse> response = restTemplate.exchange("https://randomuser.me/api/?results=5", HttpMethod.GET, null, UserResponse.class);
         List<User> users = response.getBody().getResults();
@@ -113,6 +112,26 @@ public class UserService {
 
         return users;
     }
+
+    public User addUser(User u){
+        return repoUser.save(u);
+    }
+
+    public void deleteUser(String email){
+        repoUser.deleteByEmail(email);
+    }
+    public User getUserByEmail(String email) {
+        return repoUser.findByEmail(email);
+    }
+    public List<User> getAllusers(){
+        return repoUser.findAll();
+    }
+
+    public User updateUser(User user) {
+        return repoUser.save(user);
+    }
+
+
 
 
 

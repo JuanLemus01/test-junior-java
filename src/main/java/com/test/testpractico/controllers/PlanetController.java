@@ -3,6 +3,7 @@ package com.test.testpractico.controllers;
 import com.test.testpractico.models.Planet;
 import com.test.testpractico.services.PlanetService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -36,10 +37,20 @@ public class PlanetController {
     public Planet getPlanetByName(@PathVariable String name) {
         return planetService.getPlanetByName(name);
     }
+
     @DeleteMapping("/deletplanet/{name}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePlanet(@PathVariable String name) {
         planetService.deletePlanet(name);
+    }
+
+    @PutMapping("/updateplanet/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Planet> updatePlanet(@PathVariable String name, @RequestBody Planet updatedPlanet) {
+        Planet existingPlanet = planetService.getPlanetByName(name);
+        existingPlanet.setTerrain(updatedPlanet.getTerrain());
+        existingPlanet.setPopulation(updatedPlanet.getPopulation());
+        return ResponseEntity.ok(planetService.updatePlanet(existingPlanet));
     }
 
 }

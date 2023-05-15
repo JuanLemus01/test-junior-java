@@ -16,10 +16,8 @@ public interface InStarshipRepo extends JpaRepository<Starship,Long> {
     @Modifying
     @Query("DELETE FROM Starship s WHERE s.name = :name")
     void deleteByName(@Param("name") String name);
-
     @Query("SELECT s FROM Starship s WHERE s.name = :name")
     Starship findByName(String name);
-
     @Query("SELECT s FROM Starship s LEFT JOIN FETCH s.films")
     List<Starship> findAllFetch();
 }

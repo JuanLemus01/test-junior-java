@@ -1,4 +1,3 @@
-
 async function getpassengersValue() {
     const value = document.getElementById("passengers").value;
     await getStarship(value);
@@ -56,7 +55,6 @@ async function getStarship(passengersQuantity) {
                 consumables.textContent = `Consumables: ${starship.consumables}`;
                 consumables.classList.add('text-card');
                 cardBody.appendChild(consumables);
-
 
                 // Agregar la card al contenedor
                 starshipContainer.appendChild(card);

@@ -65,4 +65,7 @@ public class PlanetService {
     public Planet getPlanetByName(String name) {
         return repoplanet.findByName(name);
     }
+    public Planet updatePlanet(Planet planet) {
+        return repoplanet.save(planet);
+    }
 }

@@ -2,39 +2,42 @@ package com.test.testpractico.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "usertest")
 public class User {
-
-    private String gender;
-    private NameUsuario name;
-
-    //private Location location;
-
+    @Id
+    @Column(name = "email")
     private String email;
-    private Login login;
+    @Column(name = "gender")
+    private String gender;
+    @Embedded
+    private NameUsuario name;
+    @Embedded
     private Dob dob;
-
-
-    private Registered registered;
-
-    private String idUser;
-    @JsonProperty("phone")
+    @Column(name = "phone")
     private String phone;
-    @JsonProperty("medium")
-    private String picture;
-    @JsonProperty("nat")
+    @Embedded
+    private Picture picture;
+    @Column(name = "nat")
     private String nat;
-
     private String repLetter;
 
-
-
-    public Login getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(Login login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public NameUsuario getName() {
@@ -45,37 +48,12 @@ public class User {
         this.name = name;
     }
 
-    public String getGender() {
-        return gender;
+    public Dob getDob() {
+        return dob;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-    public Registered getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(Registered registered) {
-        this.registered = registered;
-    }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
-    public String getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setDob(Dob dob) {
+        this.dob = dob;
     }
 
     public String getPhone() {
@@ -86,11 +64,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getPicture() {
+    public Picture getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(Picture picture) {
         this.picture = picture;
     }
 
@@ -100,14 +78,6 @@ public class User {
 
     public void setNat(String nat) {
         this.nat = nat;
-    }
-
-    public Dob getDob() {
-        return dob;
-    }
-
-    public void setDob(Dob dob) {
-        this.dob = dob;
     }
 
     public String getRepLetter() {

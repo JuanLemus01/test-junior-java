@@ -1,6 +1,6 @@
 package com.test.testpractico.repositories;
 
-import com.test.testpractico.models.Planet;
+import com.test.testpractico.models.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface InPlanetsRepo extends JpaRepository<Planet,Long> {
+public interface InUserRepo extends JpaRepository<User,Long> {
     @Modifying
-    @Query("DELETE FROM Planet p WHERE p.name = :name")
-    void deleteByName(@Param("name") String name);
-    @Query("SELECT s FROM Planet s WHERE s.name = :name")
-    Planet findByName(String name);
+    @Query("DELETE FROM User u WHERE u.email = :email")
+    void deleteByEmail(@Param("email") String email);
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    User findByEmail(@Param("email") String email);
 }

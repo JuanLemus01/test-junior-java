@@ -74,16 +74,8 @@ public class StarshipService {
     public Starship getStarshipByName(String name) {
         return repostarship.findByName(name);
     }
-    public Starship updateStarship(Starship updatedStarship) {
-        Starship responseShip = repostarship.findByName(updatedStarship.getName());
-
-        responseShip.setPassengers(updatedStarship.getPassengers());
-        responseShip.setConsumables(updatedStarship.getConsumables());
-        responseShip.setMax_atmosphering_speed(updatedStarship.getMax_atmosphering_speed());
-        responseShip.setModel(updatedStarship.getModel());
-
-        return repostarship.save(responseShip);
-
+    public Starship updateStarship(Starship ship) {
+        return repostarship.save(ship);
     }
 
 

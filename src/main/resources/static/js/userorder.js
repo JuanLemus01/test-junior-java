@@ -1,10 +1,12 @@
 window.addEventListener('load', async function() {
-
-    await usersCount();
+    await usersListOrder();
 })
-async function usersCount() {
 
-    fetch('/users-count')
+async function usersListOrder() {
+    if (!confirm('¿Desea agregar 10 registros de usuario?')) {
+        return;
+    }
+    fetch('/users-order')
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -12,9 +14,9 @@ async function usersCount() {
             throw new Error('Error en la respuesta del servidor');
         })
         .then(data => {
-            const usersContainer = document.getElementById('cardUserCount') || '';
+            const usersContainer = document.getElementById('cardUser') || '';
 
-            console.log(data, "count");
+            console.log(data);
             data.forEach(user => {
 
                 const card = document.createElement('div');
@@ -28,7 +30,7 @@ async function usersCount() {
 
                 const image = document.createElement('img');
                 //image.src = user.picture.medium;
-                image.src = user.picture.medium;
+                image.src = user.picture.large;
                 image.classList.add('card-img-top')
                 cardUs.appendChild(image);
 
@@ -36,7 +38,6 @@ async function usersCount() {
                 cardBody.classList.add('card-body');
                 cardBody.classList.add('p-4');
                 cardUs.appendChild(cardBody);
-
 
                 const name = document.createElement('h5');
                 name.textContent = `${user.name.first} ${user.name.last}`;
@@ -53,15 +54,10 @@ async function usersCount() {
                 phone.classList.add('text-card');
                 cardBody.appendChild(phone);
 
-                const age = document.createElement('p');
-                age.textContent = `Age: ${user.dob.age}`;
-                age.classList.add('text-card');
-                cardBody.appendChild(age);
-
-                const letter = document.createElement('p');
-                letter.textContent = `letter: ${user.repLetter}`;
-                letter.classList.add('text-card');
-                cardBody.appendChild(letter);
+                const email = document.createElement('p');
+                email.textContent = ` ${user.email}`;
+                email.classList.add('text-card');
+                cardBody.appendChild(email);
 
                 // Agregar la card al contenedor
                 usersContainer.appendChild(card);
@@ -71,3 +67,6 @@ async function usersCount() {
             console.error(error);
         });
 }
+
+
+
