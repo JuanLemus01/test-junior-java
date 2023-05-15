@@ -48,11 +48,14 @@ async function getStarship(passengersQuantity) {
                 console.log(starship.films, starship)
 
                 const film = document.createElement('p');
-                film.textContent = `Films: ${starship.films.map(f => f)}`;
+                film.textContent = `Films: ${starship.films.map(f => f.film)}`;
                 film.classList.add('text-card');
                 cardBody.appendChild(film);
 
-
+                const consumables = document.createElement('p');
+                consumables.textContent = `Consumables: ${starship.consumables}`;
+                consumables.classList.add('text-card');
+                cardBody.appendChild(consumables);
 
 
                 // Agregar la card al contenedor

@@ -4,6 +4,8 @@ import com.test.testpractico.models.Planet;
 import com.test.testpractico.models.PlanetResponse;
 import com.test.testpractico.models.Starship;
 import com.test.testpractico.models.StarshipResponse;
+import com.test.testpractico.repositories.InPlanetsRepo;
+import com.test.testpractico.repositories.InStarshipRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class PlanetService {
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private InPlanetsRepo repoplanet;
 
     public Planet getPlanet(@PathVariable String terrainFind){
 
@@ -42,7 +46,7 @@ public class PlanetService {
                     .filter(planet -> !planet.getTerrain().equals("n/a") && !planet.getTerrain().equals("unknown")
                                     && !planet.getPopulation().equals("unknown")
                                     && !planet.getPopulation().equals("n/a")
-                                    && planet.getTerrain().replace(",","").contains(terrainFind)
+                                    && planet.getTerrain().replace(",","").toLowerCase().contains(terrainFind.toLowerCase())
                     )
                     .collect(Collectors.toList());
 
@@ -51,5 +55,17 @@ public class PlanetService {
         planetPages.sort(Comparator.comparing(s -> Long.parseLong(s.getPopulation())));
 
         return planetPages.isEmpty() ? null : planetPages.get(planetPages.size()-1) ;
+    }
+    public Planet addPlanet(Planet p){
+        return repoplanet.save(p);
+    }
+    public void deletePlanet(String name){
+        repoplanet.deleteByName(name);
+    }
+    public List<Planet> getAllplanets(){
+        return repoplanet.findAll();
+    }
+    public Starship getPlanetByName(String name) {
+        return repoplanet.findByName(name);
     }
 }

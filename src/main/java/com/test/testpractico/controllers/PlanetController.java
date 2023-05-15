@@ -4,10 +4,10 @@ import com.test.testpractico.models.Planet;
 import com.test.testpractico.models.Starship;
 import com.test.testpractico.services.PlanetService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 public class PlanetController {
@@ -24,6 +24,23 @@ public class PlanetController {
         if (planets == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recurso no encontrado");
         }
+        planetService.addPlanet(planets);
         return planets;
     }
+    @GetMapping("/listplanets")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Planet> getAllplanets(){
+        return planetService.getAllplanets();
+    }
+    @GetMapping("/planetidlist/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public Starship getPlanetByName(@PathVariable String name) {
+        return planetService.getPlanetByName(name);
+    }
+    @DeleteMapping("/deletplanet/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePlanet(@PathVariable String name) {
+        planetService.deletePlanet(name);
+    }
+
 }

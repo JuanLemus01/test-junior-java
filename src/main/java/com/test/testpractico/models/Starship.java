@@ -1,29 +1,28 @@
 package com.test.testpractico.models;
 
+import jakarta.persistence.*;
+
 import java.util.List;
-
+@Entity
+@Table(name = "starship")
 public class Starship {
-
+    @Id
+    @Column(name = "name")
     private String name;
+    @Column(name = "model")
     private String model;
-    private String manufacturer;
-    private String cost_in_credits;
-    private String length;
+    @Column(name = "max_atmosphering_speed")
     private String max_atmosphering_speed;
-    private String crew;
+    @Column(name = "passengers")
     private String passengers;
+    @Column(name = "consumables")
     private String consumables;
-
-    private List<String> films;
-
-
-
-    private String starship_class;
+    @OneToMany(mappedBy = "starshipF", cascade = CascadeType.ALL)
+    private List<Film> films;
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -36,44 +35,12 @@ public class Starship {
         this.model = model;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getCost_in_credits() {
-        return cost_in_credits;
-    }
-
-    public void setCost_in_credits(String cost_in_credits) {
-        this.cost_in_credits = cost_in_credits;
-    }
-
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
-
     public String getMax_atmosphering_speed() {
         return max_atmosphering_speed;
     }
 
     public void setMax_atmosphering_speed(String max_atmosphering_speed) {
         this.max_atmosphering_speed = max_atmosphering_speed;
-    }
-
-    public String getCrew() {
-        return crew;
-    }
-
-    public void setCrew(String crew) {
-        this.crew = crew;
     }
 
     public String getPassengers() {
@@ -84,13 +51,6 @@ public class Starship {
         this.passengers = passengers;
     }
 
-    public String getStarship_class() {
-        return starship_class;
-    }
-
-    public void setStarship_class(String starship_class) {
-        this.starship_class = starship_class;
-    }
     public String getConsumables() {
         return consumables;
     }
@@ -99,11 +59,11 @@ public class Starship {
         this.consumables = consumables;
     }
 
-    public List<String> getFilms() {
+    public List<Film> getFilms() {
         return films;
     }
 
-    public void setFilms(List<String> films) {
+    public void setFilms(List<Film> films) {
         this.films = films;
     }
 }
