@@ -23,5 +23,40 @@ ___
 + [Dependencias](https://github.com/JuanLemus01/test-junior-java/blob/master/pom.xml)
 + SpringBoot version 3.0.6
 
+---
 
+### Prueba Logica
+Desarrollado en pseInt
 
+```
+Algoritmo PruebaLogica
+
+    Definir size, sumaDiagonal1, sumaDiagonal2, restaDiagonales como Entero
+	
+    Escribir "Ingrese el tamaño de la matriz (n x n):"
+    Leer size
+	
+    Dimension matriz[size,size]
+	
+    Para i = 0 hasta size-1 Hacer
+        Para j = 0 hasta size-1 Hacer
+            Escribir "Ingrese el valor en la posición (", i, ", ", j, "):"
+            Leer matriz[i,j]
+        Fin Para
+    Fin Para
+	
+    sumaDiagonal1 = 0
+    Para i = 0 hasta size-1 Hacer
+        sumaDiagonal1 = sumaDiagonal1 + matriz[i,i]
+    Fin Para
+	
+    sumaDiagonal2 = 0
+    Para i = 0 hasta size-1 Hacer
+        sumaDiagonal2 = sumaDiagonal2 + matriz[i,size-1-i]
+    Fin Para
+	
+    restaDiagonales = Abs(sumaDiagonal1 - sumaDiagonal2)
+	
+    Escribir "La diferencia absoluta entre las diagonales es:", restaDiagonales
+Fin Algoritmo
+```
